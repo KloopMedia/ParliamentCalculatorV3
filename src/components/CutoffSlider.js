@@ -24,7 +24,7 @@ const muiTheme = createMuiTheme({
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: 400,
+    width: 300,
   },
   margin: {
     height: theme.spacing(3),

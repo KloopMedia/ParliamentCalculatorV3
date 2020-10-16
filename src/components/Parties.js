@@ -70,8 +70,7 @@ class Parties extends React.Component {
         let defaultState = {}
 
         defaultState.percentsLeft=100
-        defaultState.againstAllReached = false
-        defaultState.onlyOnePartyPassed = false     
+        defaultState.againstAllReached = false            
 
         let parties = {}
         electionsConfig.parties.map((value) => {
@@ -95,6 +94,8 @@ class Parties extends React.Component {
         this.switchBirimdik = true
         this.switchMekenim = true
         this.switchKyrgyzstan = true
+
+        this.onlyOnePartyPassed = false 
       }    
 
 
@@ -231,6 +232,8 @@ class Parties extends React.Component {
 
         console.log('CALC')
         console.log(this.cutoff)
+
+        this.onlyOnePartyPassed = false
 
         let percentSum = 0
         let totalPassedParlamentPercent = 0
@@ -375,7 +378,7 @@ class Parties extends React.Component {
                         parties[party].parlamentResultChairs = 0
                     })   
 
-                    this.setState( {onlyOnePartyPassed: onlyOnePartyPassed} )
+                    this.onlyOnePartyPassed = onlyOnePartyPassed
                 }
             }
 
@@ -461,9 +464,9 @@ class Parties extends React.Component {
     render() {
 
         console.log(this.state)
+        console.log(this.onlyOnePartyPassed)
 
         const isAgainstAllReached = this.state.againstAllReached;
-        const onlyOnePartyPassed = this.state.onlyOnePartyPassed;
         const { classes } = this.props;
 
         //console.log(this.prepareChartData())
@@ -472,7 +475,7 @@ class Parties extends React.Component {
 
                 <Grid container justify="center">
                     <Grid item className={classes.header}>
-                        <Typography variant="h5">Измените избирательный порог и Вы увидите как распределяются места в парламенте с учетом нового избирательного порога</Typography>
+                        <Typography variant="h5">Измените избирательный порог и Вы увидите как распределяются места в парламенте</Typography>
                     </Grid>
                 </Grid>
 
@@ -481,7 +484,7 @@ class Parties extends React.Component {
                 </Grid>
 
                 <FormControl component="fieldset">
-                    <FormLabel component="legend">Исключить нижеследующие партии из расчетов при распределении мест?</FormLabel>
+                    <FormLabel component="legend">Вы можете включить или исключить нижеследующие партии из расчетов при распределении мест</FormLabel>
                         <FormGroup>
                         <FormControlLabel
                             control={
@@ -531,7 +534,7 @@ class Parties extends React.Component {
 
                 <b>{isAgainstAllReached ? electionsConfig.against_all_reached_message : ''}</b>
 
-                <b>{onlyOnePartyPassed ? electionsConfig.one_party_cutoff_only_message : ''}</b>
+                <b>{this.onlyOnePartyPassed ? electionsConfig.one_party_cutoff_only_message : ''}</b>
 
                 <List dense className={'Parties'}>
                 {electionsConfig.parties.map((value) => {
